@@ -1,4 +1,4 @@
-package day04.jungol;
+package day05.jungol;
 
 public class 자가진단1_1 {
     public static void main(String[] args) {

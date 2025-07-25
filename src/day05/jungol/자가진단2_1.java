@@ -1,4 +1,4 @@
-package day04.jungol;
+package day05.jungol;
 import java.util.*;
 
 public class 자가진단2_1 {
