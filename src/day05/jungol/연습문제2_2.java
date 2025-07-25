@@ -1,6 +1,6 @@
-package day04.jungol;
+package day05.jungol;
 
-public class 자가진단2_2 {
+public class 연습문제2_2 {
     public static void main(String[] args) {
         for(int i=65; i<91; i++){
             char c = (char)i;
