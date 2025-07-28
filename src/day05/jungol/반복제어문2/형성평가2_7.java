@@ -7,12 +7,16 @@ public class 형성평가2_7 {
 
         int num = sc.nextInt();
 
-        int i = num;
-        while(true){
-            if(i<=num*10){
-                System.out.print(i + " ");
-                i += 5;
-            }
+        int i = 1;
+        while(i*num <= num * 10) {
+            System.out.print(i*num + " ");
+            i += 1;
+        }
+
+        System.out.println();
+
+        for(int j=1; j<=10; j++){
+            System.out.print(j*num+" ");
         }
     }
 }
