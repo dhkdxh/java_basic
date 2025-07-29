@@ -10,8 +10,8 @@ public class 종합실습문제 {
         System.out.print("당신의 연락처를 입력하세요 : ");
         String phone = sc.nextLine();
 
-        int input;
-        while(true){
+        int input = 0;
+        while(input != 8){
             System.out.println("****************************************************");
             System.out.println("       Welcome to Shopping Mall");
             System.out.println("       Welcome to Book Market!");
@@ -43,7 +43,8 @@ public class 종합실습문제 {
                 case 7:
                     break;
                 case 8:
-                    return;
+                    System.out.println("프로그램이 종료됩니다");
+                    break;
                 default:
                     System.out.println("Wrong number. Please enter the number(1-8).");
             }
