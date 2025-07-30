@@ -1,4 +1,3 @@
-package day06;
 import java.util.*;
 
 public class 종합실습문제 {
