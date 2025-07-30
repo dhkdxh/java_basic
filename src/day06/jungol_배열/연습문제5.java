@@ -1,5 +1,4 @@
-package day06.jungol;
-import com.sun.security.jgss.GSSUtil;
+package day06.jungol_배열;
 
 import java.util.*;
 

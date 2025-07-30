@@ -1,4 +1,4 @@
-package day06.jungol;
+package day06.jungol_배열;
 
 public class 연습문제2 {
     public static void main(String[] args) {

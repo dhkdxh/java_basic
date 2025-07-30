@@ -1,4 +1,4 @@
-package day06.jungol;
+package day06.jungol_배열;
 import java.util.*;
 
 public class 연습문제6 {
