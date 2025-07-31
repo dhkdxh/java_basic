@@ -2,9 +2,9 @@ package JavaBasic.JavaBasic_02.test.loop_array;
 
 public class Student {
     private int[] scores;
-    private int sum;
-    private int lengthOfScores;
-    private int studentNum;
+    private int sum; // score들의 sum을 쉽게 관리하기 위해
+    private int lengthOfScores;//학생수 입력 되었을 때, score가 입력되었는지 확인하기 위해
+    private int studentNum; //입력된 학생수
 
     public Student(){
         this.sum=0;
