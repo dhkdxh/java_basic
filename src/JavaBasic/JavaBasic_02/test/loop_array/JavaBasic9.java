@@ -22,7 +22,7 @@ public class JavaBasic9 {
                     student = new Student(numOfStudent);
                     break;
                 case 2:
-                    if(numOfStudent==0){
+                    if(!student.isStudentExisted()){
                         System.out.println("아직 학생 수가 입력되지 않았습니다. 학생 수를 먼저 입력해주세요.");
                     }else{
                         for(int i=0; i<numOfStudent; i++){

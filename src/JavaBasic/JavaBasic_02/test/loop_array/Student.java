@@ -4,19 +4,22 @@ public class Student {
     private int[] scores;
     private int sum;
     private int lengthOfScores;
+    private int studentNum;
 
     public Student(){
         this.sum=0;
         this.lengthOfScores=0;
+        studentNum=0;
     }
     public Student(int num){
         this.scores = new int[num];
         this.sum = 0;
-        this.lengthOfScores=num;
+        this.studentNum=num;
     }
 
     public void setScore(int index, int score){
         this.scores[index] = score;
+        lengthOfScores++;
     }
 
     public int getScore(int index){
@@ -34,6 +37,11 @@ public class Student {
 
     public double getAvg(){
         return (double)sum/scores.length;
+    }
+
+    public boolean isStudentExisted(){
+        if(studentNum>0) return true;
+        return false;
     }
 
     public boolean isScoreEntered(){
