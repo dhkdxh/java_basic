@@ -27,7 +27,7 @@ public class Ex01 {
 
         scores[2][0] = 100;
         scores[2][1] = 90;
-        scores[2][2] = 190;
+        scores[2][2] = 100;
 
         for(int i=0; i<3; i++){
             System.out.print(scores[2][i]+" ");
@@ -38,5 +38,13 @@ public class Ex01 {
         for(int i=0; i<3; i++){
             System.out.printf("학생 %d의 총점: %d 평균: %d\n", i+1, sum[i], sum[i]/3);
         }
+
+        //출력할 때 한번에 하는 방법
+//        for(int i=0; i<3; i++){
+//            for(int j=0; j<3; j++){
+//                System.out.print(scores[i][j]+" ");
+//            }
+//            System.out.println();
+//        }
     }
 }
