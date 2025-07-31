@@ -26,5 +26,19 @@ public class Main {
         System.out.println(mv.runningTime);
         mv.grade = "12세";
         System.out.println(mv.grade);
+
+        System.out.println("-------------------------");
+
+        MovieTest[] list  = new MovieTest[3];
+        for(int i=0; i<3; i++){
+            list[i] = new MovieTest();
+        }
+        list[0].name = "아바타";
+        list[1].name = "아티";
+        list[2].name = "좀비딸";
+
+        for (MovieTest movieTest : list) {
+            System.out.println(movieTest.name);
+        }
     }
 }
