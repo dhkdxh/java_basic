@@ -22,7 +22,7 @@ public class JavaBasic9 {
                     case 1:
                         System.out.print("학생수> ");
                         numOfStudent = Integer.parseInt(sc.nextLine());
-                        student = new Student(numOfStudent);//parameter가 있는 constructor를 이용하여 Student instance 할당
+                        student = new Student(numOfStudent);//parameter가 있는 constructor를 이용하여 할당
                         break;
                     case 2:
                         if (!student.isStudentExisted()) {//학생 수를 입력하지 않았을 경우
