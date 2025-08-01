@@ -13,6 +13,7 @@ public class Student {
     }
     public Student(int num){
         this.scores = new int[num];
+        this.lengthOfScores = 0;
         this.sum = 0;
         this.studentNum=num;
     }
