@@ -20,5 +20,18 @@ public class Ex02 {
 
         System.out.println(str1 == str3);
         System.out.println(str1.equals(str1));
+
+        //intern() method -> 문자열을 최적화하여 관리하기 위한 method
+        System.out.println("---------------------------------------------");
+
+        String str = "Hello";
+        String str5 = new String(new char[]{'H', 'e', 'l', 'l', 'o'}).intern();
+        System.out.println(str1 == str2); //true
+
+        String str6 = "Hi";
+        String str7 = new String("Hi");
+
+        str6 = str6.intern();
+        System.out.println(str6 == str7);//false
     }
 }
