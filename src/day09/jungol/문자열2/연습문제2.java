@@ -1,13 +1,15 @@
-package day09.jungol;
+package day09.jungol.문자열2;
 import java.util.*;
 
-public class 연습문제8 {
+public class 연습문제2 {
     static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
         String s = sc.nextLine();
 
-        String[] answer = s.split(" ");
-        for (String string : answer) {
+        String[] arr = s.split(" ");
+
+        for (String string : arr) {
             System.out.println(string);
         }
     }
