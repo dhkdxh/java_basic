@@ -11,13 +11,13 @@ public class 형성평가2 {
 
         int count = 0;
         for (String s : arr) {
-            for(int i=0; i<3; i++){
-                char c = s.charAt(i);
-                if(c == input){
-                    count += (i==2 || i==1)? 1 : 0;
-                }
+            boolean flag = (s.charAt(1)==input || s.charAt(2)==input);
+            if(flag) {
+                System.out.println(s);
+                count++;
             }
         }
+
         System.out.println(count);
     }
 }
