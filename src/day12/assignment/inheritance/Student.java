@@ -21,5 +21,12 @@ public class Student {
     public void print(){
         System.out.println(this.name+" 씨의 과정명은 "+this.subject+" 이고 교육비는 "+this.fee+" 이며 환급금은 "+this.returnFee+" 입니다.");
     }
+
+    public static void main(String args[]){
+        Student stu = new Student("장동건", "jspprogram",
+                500000);
+        stu.calcReturnFee();
+        stu.print();
+    }
 }
 
