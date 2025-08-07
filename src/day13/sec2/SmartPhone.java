@@ -1,11 +1,14 @@
-package day12.sec2;
+package day13.sec2;
 
-public class SmartPhone {
+public class SmartPhone extends Phone{
     //필드 선언
     public boolean wifi;
 
     //생성자 선언
-
+    public SmartPhone(String model, String color){
+        super(model,color);
+        wifi = false;
+    }
 
     //메소드 선언
     public void setWifi(boolean wifi) {
