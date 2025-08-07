@@ -1,10 +1,14 @@
-package day12.sec2;
+package day13.sec2;
 
 public class Phone {
     //필드 선언
     public String model;
     public String color;
 
+    public Phone(String model, String color){
+        this.model = model;
+        this.color = color;
+    }
     //메소드 선언
     public void bell() {
         System.out.println("벨이 울립니다.");
