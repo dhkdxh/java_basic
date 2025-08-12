@@ -5,12 +5,12 @@ public class AnimalTest {
         Animal dog = new Dog(8);
         Animal chicken = new Chicken(3);
         Chicken cheatableChicken = new Chicken(5);
+        //animal type에서는 fly 호출할 수 없기 때문에
 
-        Cheatable flyChicken = cheatableChicken;
+//        Cheatable current = cheatableChicken;
+//        current.fly();
 
-        if(flyChicken instanceof Chicken current){
-            current.fly();
-        }
+        if(cheatableChicken instanceof Cheatable) cheatableChicken.fly();
 
         for(int i=1; i<=3; i++){
             System.out.println(i+"시간 후");

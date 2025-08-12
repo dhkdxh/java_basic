@@ -21,9 +21,10 @@ public class CarFactory extends Factory implements IWorkingTogether{
     @Override
     public int workTogether(IWorkingTogether partner) {
         int total = 0;
-        if(partner instanceof Factory factory){
+        if(partner instanceof CarFactory factory){
             total = factory.makeProducts('B');
         }
         return total;
+        //return ((CarFactory)partner).makeProducts('B');
     }
 }

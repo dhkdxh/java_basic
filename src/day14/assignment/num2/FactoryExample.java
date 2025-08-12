@@ -31,13 +31,13 @@ public class FactoryExample {
     public void getResult(Factory mainFactory, char mainFactorySkill, IWorkingTogether partner) {
         System.out.println("* " + mainFactory.getFactoryName() + " 공장의 하루 생산량과 파트너 공장 협력 시 추가 생산량은 다음과 같다.");
         // TODO
+        System.out.println("1. 하루 생산량 = "+ mainFactory.makeProducts(mainFactorySkill));
         IWorkingTogether temp = null;
         if(mainFactory instanceof TVFactory){
             temp = (TVFactory)mainFactory;
         } else if(mainFactory instanceof CarFactory){
             temp = (CarFactory)mainFactory;
         }
-        System.out.println("1. 하루 생산량 = "+ mainFactory.makeProducts(mainFactorySkill));
         if(partner instanceof Factory factory) System.out.println("2. 파트너 공장 ["+factory.getFactoryName()+"] 협력 시 추가 생산량 = "+temp.workTogether(partner));
         System.out.println("--------------------------------------------------------------");
     }
