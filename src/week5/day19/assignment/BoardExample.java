@@ -7,13 +7,19 @@ public class BoardExample {
     static int boardCount = 1;
 
     public static void main(String[] args) {
-        while(true){
-            list();
-            mainMenu();
+        try {
+            while(true){
+                list();
+                mainMenu();
+            }
+        } catch (BoardException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 
-    public static void mainMenu(){
+    public static void mainMenu() throws BoardException{
         System.out.println("------------------------------------------");
         System.out.println("메인메뉴: 1. Create | 2. Read | 3. Clear | 4. Exit");
         System.out.print("메뉴 선택: ");
@@ -27,10 +33,11 @@ public class BoardExample {
                 System.out.println("** 게시판 종료 **");
                 System.exit(0);
             }
+            default -> throw new BoardException("1-4까지의 숫자를 입력해주세요.");
         }
     }
 
-    public static void create(){
+    public static void create() throws BoardException{
         System.out.println("[새 개시물 입력]");
         System.out.print("제목: ");
         String title = sc.nextLine();
@@ -46,7 +53,9 @@ public class BoardExample {
         System.out.println();
 
         switch (input){
-            case 1 -> createBoard(title, content, name);
+            case 1: createBoard(title, content, name); break;
+            case 2: break;
+            default: throw new BoardException("1-2까지의 숫자만 입력해주세요.");
         }
     }
 
@@ -57,18 +66,18 @@ public class BoardExample {
         list();
     }
 
-    public static void read() {//예외처리
+    public static void read() throws BoardException{
         System.out.println("[게시물 읽기]");
         System.out.print("bno: ");
         int input = Integer.parseInt(sc.nextLine());
         if(input <=0 || input > boardCount){
-
+            throw new BoardException("해당 번호에 해당하는 책이 존재하지 않습니다.");
         }
         boards.get(input-1).readBoard();
         subMenu1(input);
     }
 
-    public static void subMenu1(int num){
+    public static void subMenu1(int num) throws BoardException{
         System.out.println("------------------------------------------");
         System.out.println("보조메뉴: 1.Update | 2.Delete | 3.List");
         System.out.print("메뉴 선택: ");
@@ -78,10 +87,12 @@ public class BoardExample {
         switch(input){
             case 1 -> update(num);
             case 2 -> delete(num);
+            case 3 -> list();
+            default -> throw new BoardException("1-3까지의 숫자를 입력해주세요.");
         }
     }
 
-    public static void update(int num){
+    public static void update(int num) throws BoardException{
         System.out.println("[수정 내용 입력]");
         System.out.print("제목: ");
         String reTitle = sc.nextLine();
@@ -95,6 +106,9 @@ public class BoardExample {
         System.out.print("메뉴 선택: ");
         int input = Integer.parseInt(sc.nextLine());
 
+        if(input != 1 && input != 2){
+            throw new BoardException("1-2까지의 숫자만 입력해주세요.");
+        }
         if(input == 1){
             boards.get(num-1).setbTitle(reTitle);
             boards.get(num-1).setbContent(reContent);
@@ -119,13 +133,14 @@ public class BoardExample {
         list();
     }
 
-    public static void clear(){
+    public static void clear() throws BoardException{
         System.out.println("[게시물 전체 삭제]");
         System.out.println("------------------------------------------");
         System.out.println("보조 메뉴: 1. Ok | 2. Cancel");
         System.out.print("메뉴 선택: ");
         int input = Integer.parseInt(sc.nextLine());
         System.out.println();
+        if(input != 1 && input != 2) throw new BoardException("1-2까지의 숫자만 입력해주세요.");
 
         boards.clear();
         boards = new ArrayList<>();
