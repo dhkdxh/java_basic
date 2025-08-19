@@ -4,8 +4,10 @@ import BookMarket.bookitem.Book;
 import BookMarket.cart.Cart;
 import BookMarket.member.Admin;
 import BookMarket.member.User;
+import BookMarket.exception.CartException;
 
 import java.util.*;
+import java.text.*;
 
 public class Welcome {
     static Scanner sc = new Scanner(System.in);
@@ -26,41 +28,48 @@ public class Welcome {
         mUser = new User(name, phone);
 
         int input = 0;
+        Outter:
         while (input != 8) {
             menuIntroduction();
 
-            input = sc.nextInt();
+            try {
+                input = sc.nextInt();
 
-            switch (input) {
-                case 1:
-                    menuGuestInfo();
-                    break;
-                case 2:
-                    menuCartItemList();
-                    break;
-                case 3:
-                    menuCartClear();
-                    break;
-                case 4:
-                    menuCartAddItem(mBookList);
-                    break;
-                case 5:
-                    menuCartRemoveItemCount();
-                    break;
-                case 6:
-                    menuCartRemoveItem();
-                    break;
-                case 7:
-                    menuCartBill();
-                    break;
-                case 8:
-                    menuExit();
-                    break;
-                case 9:
-                    menuAdminLogin();
-                    break;
-                default:
-                    System.out.println("1부터 9까지의 숫자를 입력하세요.");
+                switch (input) {
+                    case 1:
+                        menuGuestInfo();
+                        break;
+                    case 2:
+                        menuCartItemList();
+                        break;
+                    case 3:
+                        menuCartClear();
+                        break;
+                    case 4:
+                        menuCartAddItem(mBookList);
+                        break;
+                    case 5:
+                        menuCartRemoveItemCount();
+                        break;
+                    case 6:
+                        menuCartRemoveItem();
+                        break;
+                    case 7:
+                        menuCartBill();
+                        break;
+                    case 8:
+                        menuExit();
+                        break;
+                    case 9:
+                        menuAdminLogin();
+                        break;
+                }
+            } catch (CartException e) {
+                System.out.println(e.getMessage());
+                break Outter;
+            }catch(Exception e) {
+                System.out.println("올바르지 않은 메뉴 선택으로 종료합니다.");
+                break Outter;
             }
         }
     }
@@ -76,8 +85,8 @@ public class Welcome {
         }
     }
 
-    public static void menuCartClear() {
-        if (Cart.mCartCount == 0) System.out.println("장바구니에 항목이 없습니다.");
+    public static void menuCartClear() throws CartException {
+        if (Cart.mCartCount == 0) throw new CartException("장바구니에 항목이 없습니다.");
         else {
             System.out.println("장바구니의 모든 항목을 삭제하겠습니까? Y | N");
             String str = sc.nextLine();
@@ -123,44 +132,83 @@ public class Welcome {
             }
         }
     }
-        public static void menuCartRemoveItemCount () {
+    public static void menuCartRemoveItemCount () {
 
-        }
+    }
 
-        public static void menuCartRemoveItem () {
-            if (Cart.mCartCount == 0) System.out.println("장바구니에 항목이 없습니다.");
-            else {
-                menuCartItemList();
-                boolean quit = false;
-                while (!quit) {
-                    System.out.println("장바구니에서 삭제할 도서의 ID를 입력하세요 : ");
-                    String str = sc.nextLine();
-                    boolean flag = false;
-                    int numId = -1;
+    public static void menuCartRemoveItem () throws CartException {
+        if (Cart.mCartCount == 0) throw new CartException("장바구니에 항목이 없습니다.");
+        else {
+            menuCartItemList();
+            boolean quit = false;
+            while (!quit) {
+                System.out.println("장바구니에서 삭제할 도서의 ID를 입력하세요 : ");
+                String str = sc.nextLine();
+                boolean flag = false;
+                int numId = -1;
 
-                    for (int i = 0; i < Cart.mCartCount; i++) {
-                        if (str.equals(mCart.mCartItem[i].getBookID())) {
-                            numId = i;
-                            flag = true;
-                            break;
-                        }
+                for (int i = 0; i < Cart.mCartCount; i++) {
+                    if (str.equals(mCart.mCartItem[i].getBookID())) {
+                        numId = i;
+                        flag = true;
+                        break;
                     }
+                }
 
-                    if (flag) {
-                        System.out.println("장바구니의 항목을 삭제하겠습니까? Y | N ");
-                        str = sc.nextLine();
-                        if (str.toUpperCase().equals("Y")) {
+                if (flag) {
+                    System.out.println("장바구니의 항목을 삭제하겠습니까? Y | N ");
+                    str = sc.nextLine();
+                    if (str.toUpperCase().equals("Y")) {
                             System.out.println(mCart.mCartItem[numId].getBookID() + " 장바구니에서 도서가 삭제되었습니다.");
                             mCart.removeCart(numId);
-                        }
-                        quit = true;
-                    } else System.out.println("다시 입력해 주세요.");
-                }
+                    }
+                    quit = true;
+                } else System.out.println("다시 입력해 주세요.");
             }
         }
-        public static void menuCartBill () {
+    }
+        public static void menuCartBill () throws CartException {
+            if(Cart.mCartCount == 0) {
+                throw new CartException("장바구니에 항목이 없습니다.");
+            }
+            System.out.println("배송받을 분은 고객 정보와 같습니까? Y | N");
+            String str = sc.nextLine();
 
+            if(str.toUpperCase().equals("Y")) {
+                System.out.print("배송지를 입력해주세요 ");
+                String address = sc.nextLine();
+                printBill(mUser.getName(), String.valueOf(mUser.getPhone()), address);
+            }else{
+                System.out.print("배송받을 고객명을 입력하세요 ");
+                String name = sc.nextLine();
+                System.out.print("배송받을 고객의 연락처를 입력하세요 ");
+                String phone = sc.nextLine();
+                System.out.print("배송받을 고개의 배송지를 입력해주세요 ");
+                String address = sc.nextLine();
+                printBill(name, phone, address);
+            }
         }
+
+        public static void printBill(String name, String phone, String address) {
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            String strDate = formatter.format(date);
+            System.out.println();
+            System.out.println("------------------배송받을 고객 정보-------------------");
+            System.out.println("고객명 : "+ name + "   \t\t연락처 : "+ phone);
+            System.out.println(" 배송지 : "+ address + "\t\t발송일 : "+ strDate);
+
+            mCart.printCart();
+
+            int sum = 0;
+            for(int i=0; i<Cart.mCartCount; i++) {
+                sum += mCart.mCartItem[i].getTotalPrice();
+            }
+
+            System.out.println("\t\t\t주문 총금액 : "+sum+"원\n");
+            System.out.println("-----------------------------------------------------");
+        }
+
         public static void menuExit () {
             System.out.println("프로그램이 종료됩니다");
         }
