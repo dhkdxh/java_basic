@@ -29,7 +29,7 @@ public class BoardExample {
                     case "1" -> create();
                     case "2" -> read();
                     case "3" -> clear();
-                    case "4" -> exit();
+                    case "4" -> System.exit(0);
                 }
             } catch (BoardException e) {
                 System.out.println(e.getMessage());
@@ -74,11 +74,6 @@ public class BoardExample {
             return inputNumber.equals("1"); //입력값이 1이면 true, 2이면 false
         }
     }
-
-    private void exit() {
-
-    }
-
 
     public void read() throws BoardException {
         Scanner input = new Scanner(System.in);
@@ -139,7 +134,6 @@ public class BoardExample {
             boardMap.get(String.valueOf(bno)).setBno(bno);
             boardManager.setBoardMap(boardMap);
         }
-
     }
 
 
@@ -167,6 +161,7 @@ public class BoardExample {
 
 
     public void clear() {
+        boardManager.getBoardMap().clear();
         boardManager.setBoardMap(new LinkedHashMap<>());
         size = 1;
     }
