@@ -7,15 +7,15 @@ public class BoardExample {
     static int boardCount = 1;
 
     public static void main(String[] args) {
-        try {
-            while(true){
+        while(true){
+            try {
                 list();
                 mainMenu();
+            } catch (BoardException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e){
+                System.out.println(e.getMessage());
             }
-        } catch (BoardException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e){
-            System.out.println(e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class BoardExample {
         System.out.println("[게시물 읽기]");
         System.out.print("bno: ");
         int input = Integer.parseInt(sc.nextLine());
-        if(input <=0 || input > boardCount){
+        if(input <=0 || input > boardCount-1){
             throw new BoardException("해당 번호에 해당하는 책이 존재하지 않습니다.");
         }
         boards.get(input-1).readBoard();
@@ -142,8 +142,10 @@ public class BoardExample {
         System.out.println();
         if(input != 1 && input != 2) throw new BoardException("1-2까지의 숫자만 입력해주세요.");
 
-        boards.clear();
-        boards = new ArrayList<>();
+        if(input == 1){
+            boards.clear();
+            boards = new ArrayList<>();
+        }
         list();
     }
 }
