@@ -6,6 +6,7 @@ import BookMarket.member.Admin;
 import BookMarket.member.User;
 import BookMarket.exception.CartException;
 
+import java.io.*;
 import java.util.*;
 import java.text.*;
 
@@ -18,7 +19,8 @@ public class Welcome {
 
     public static void main(String[] args) {
 
-        Book[] mBookList = new Book[NUM_BOOK];
+        Book[] mBookList;
+        int mTotalBook = 0;
 
         System.out.print("당신의 이름을 입력하세요 : ");
         String name = sc.nextLine();
@@ -46,6 +48,8 @@ public class Welcome {
                         menuCartClear();
                         break;
                     case 4:
+                        mTotalBook = totalFileToBookList();
+                        mBookList = new Book[mTotalBook];
                         menuCartAddItem(mBookList);
                         break;
                     case 5:
@@ -228,25 +232,7 @@ public class Welcome {
         }
 
         public static void BookList (Book[] booklist){
-
-            booklist[0] = new Book("ISBN1234", "쉽게 배우는 JSP 웹 프로그래밍", 27000);
-            booklist[0].setAuthor("송미영");
-            booklist[0].setDescription("단계별로 쇼핑몰을 구현하며 배우는 JSP 웹 프로그래밍");
-            booklist[0].setCategory("IT전문서");
-            booklist[0].setReleaseDate("2018/10/08");
-
-
-            booklist[1] = new Book("ISBN1235", "안드로이드 프로그래밍", 33000);
-            booklist[1].setAuthor("우재남");
-            booklist[1].setDescription("실습 단계별 명쾌한 멘토링!");
-            booklist[1].setCategory("IT전문서");
-            booklist[1].setReleaseDate("2022/01/22");
-
-            booklist[2] = new Book("ISBN1236", "스크래치", 22000);
-            booklist[2].setAuthor("고광일");
-            booklist[2].setDescription("컴퓨팅 사고력을 키우는 블록 코딩");
-            booklist[2].setCategory("컴퓨터입문");
-            booklist[2].setReleaseDate("2019/06/10");
+            setFileToBookList(booklist);
         }
 
         public static boolean isCartInBook (String bookId){
@@ -263,8 +249,94 @@ public class Welcome {
 
             Admin admin = new Admin(mUser.getName(), mUser.getPhone());
             if (adminId.equals(admin.getId()) && adminPW.equals(admin.getPassword())) {
-                System.out.println("이름 " + admin.getName() + "  연락처 " + admin.getPhone());
-                System.out.println("아이디 " + admin.getId() + "  비밀번호 " + admin.getPassword());
+                String[] writeBook = new String[7];
+                System.out.println("도서 정보를 추가하겠습니까? Y | N");
+                String str = sc.nextLine();
+
+                if(str.toUpperCase().equals("Y")) {
+                    Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyMMddhhmmss");
+                    String strDate = formatter.format(date);
+                    writeBook[0] = "ISBN" + strDate;
+                    System.out.println("도서ID : " + writeBook[0]);
+                    System.out.print("도서명 : ");
+                    writeBook[1] = sc.nextLine();
+                    System.out.print("가격: ");
+                    writeBook[2] = sc.nextLine();
+                    System.out.print("저자 : ");
+                    writeBook[3] = sc.nextLine();
+                    System.out.print("설명 : ");
+                    writeBook[4] = sc.nextLine();
+                    System.out.print("분야 : ");
+                    writeBook[5] = sc.nextLine();
+                    System.out.print("출판일 : ");
+                    writeBook[6] = sc.nextLine();
+
+                     try{
+                         FileWriter fw = new FileWriter("book.txt", true);
+
+                         for(int i=0; i<7; i++){
+                             fw.write(writeBook[i] + "\n");
+                             fw.close();
+                             System.out.println("새 도서 정보가 저장되었습니다.");
+                         }
+                     } catch (Exception e) {
+                         System.out.println(e.getMessage());
+                     }
+
+                }else{
+                    System.out.println("이름 " + admin.getName() + "  연락처 " + admin.getPhone());
+                    System.out.println("아이디 " + admin.getId() + "  비밀번호 " + admin.getPassword());
+                }
             } else System.out.println("관리자 정보가 일치하지 않습니다.");
+        }
+
+        public static int totalFileToBookList(){
+            try{
+                FileReader fr = new FileReader("book.txt");
+                BufferedReader reader = new BufferedReader(fr);
+                String str;
+                int num = 0;
+
+                while((str=reader.readLine()) != null){
+                    if(str.contains("ISBN")) num++;
+                }
+
+                reader.close();
+                fr.close();
+                return num;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            return 0;
+        }
+
+        public static void setFileToBookList (Book[] booklist){
+            try{
+                FileReader fr = new FileReader("book.txt");
+                BufferedReader reader = new BufferedReader(fr);
+
+                String str;
+                String[] book = new String[7];
+                int count = 0;
+
+                while((str=reader.readLine()) != null){
+                    if(str.contains("ISBN")){
+                        book[0] = str;
+                        book[1] = reader.readLine();
+                        book[2] = reader.readLine();
+                        book[3] = reader.readLine();
+                        book[4] = reader.readLine();
+                        book[5] = reader.readLine();
+                        book[6] = reader.readLine();
+                    }
+                }
+
+                booklist[count++] = new Book(book[0],book[1],Integer.parseInt(book[2]),book[3],book[4],book[5],book[6]);
+                reader.close();
+                fr.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 }
