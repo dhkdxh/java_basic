@@ -19,7 +19,8 @@ public class Welcome {
 
     public static void main(String[] args) {
 
-        Book[] mBookList;
+//        Book[] mBookList;
+        ArrayList<Book> mBookList;
         int mTotalBook = 0;
 
         System.out.print("당신의 이름을 입력하세요 : ");
@@ -49,7 +50,7 @@ public class Welcome {
                         break;
                     case 4:
                         mTotalBook = totalFileToBookList();
-                        mBookList = new Book[mTotalBook];
+                        mBookList = new ArrayList<Book>();
                         menuCartAddItem(mBookList);
                         break;
                     case 5:
@@ -102,7 +103,7 @@ public class Welcome {
         }
     }
 
-    public static void menuCartAddItem(Book[] booklist) {
+    public static void menuCartAddItem(ArrayList<Book> booklist) {
         System.out.println("장바구니에 항목 추가하기 : ");
         BookList(booklist);
         mCart.printBookList(booklist);
@@ -114,8 +115,8 @@ public class Welcome {
             int numId = -1;
             boolean flag = false;
 
-            for (int i = 0; i < NUM_BOOK; i++) {
-                if (input.equals(booklist[i].getBookId())) {
+            for (int i = 0; i < booklist.size(); i++) {
+                if (input.equals(booklist.get(i).getBookId())) {
                     numId = i;
                     flag = true;
                     break;
@@ -127,9 +128,9 @@ public class Welcome {
                 input = sc.nextLine();
 
                 if (input.toUpperCase().equals("Y")) {
-                    System.out.println(booklist[numId].getBookId() + " 도서가 장바구니에 추가되었습니다.");
-                    if (!mCart.isCartInBook(booklist[numId].getBookId())) {
-                        mCart.insertBook(booklist[numId]);
+                    System.out.println(booklist.get(numId).getBookId() + " 도서가 장바구니에 추가되었습니다.");
+                    if (!mCart.isCartInBook(booklist.get(numId).getBookId())) {
+                        mCart.insertBook(booklist.get(numId));
                     }
                     break;
                 } else System.out.println("다시 입력해주세요.");
@@ -152,7 +153,7 @@ public class Welcome {
                 int numId = -1;
 
                 for (int i = 0; i < Cart.mCartCount; i++) {
-                    if (str.equals(mCart.mCartItem[i].getBookID())) {
+                    if (str.equals(mCart.mCartItem.get(i).getBookID())) {
                         numId = i;
                         flag = true;
                         break;
@@ -163,7 +164,7 @@ public class Welcome {
                     System.out.println("장바구니의 항목을 삭제하겠습니까? Y | N ");
                     str = sc.nextLine();
                     if (str.toUpperCase().equals("Y")) {
-                            System.out.println(mCart.mCartItem[numId].getBookID() + " 장바구니에서 도서가 삭제되었습니다.");
+                            System.out.println(mCart.mCartItem.get(numId).getBookID() + " 장바구니에서 도서가 삭제되었습니다.");
                             mCart.removeCart(numId);
                     }
                     quit = true;
@@ -206,7 +207,7 @@ public class Welcome {
 
             int sum = 0;
             for(int i=0; i<Cart.mCartCount; i++) {
-                sum += mCart.mCartItem[i].getTotalPrice();
+                sum += mCart.mCartItem.get(i).getTotalPrice();
             }
 
             System.out.println("\t\t\t주문 총금액 : "+sum+"원\n");
@@ -231,7 +232,7 @@ public class Welcome {
             System.out.print("메뉴 번호를 선택해주세요 ");
         }
 
-        public static void BookList (Book[] booklist){
+        public static void BookList (ArrayList<Book> booklist){
             setFileToBookList(booklist);
         }
 
@@ -311,14 +312,13 @@ public class Welcome {
             return 0;
         }
 
-        public static void setFileToBookList (Book[] booklist){
+        public static void setFileToBookList (ArrayList<Book> booklist){
             try{
                 FileReader fr = new FileReader("book.txt");
                 BufferedReader reader = new BufferedReader(fr);
 
                 String str;
                 String[] book = new String[7];
-                int count = 0;
 
                 while((str=reader.readLine()) != null){
                     if(str.contains("ISBN")){
@@ -332,7 +332,9 @@ public class Welcome {
                     }
                 }
 
-                booklist[count++] = new Book(book[0],book[1],Integer.parseInt(book[2]),book[3],book[4],book[5],book[6]);
+                Book bookitem = new Book(book[0],book[1],Integer.parseInt(book[2]),book[3],book[4],book[5],book[6]);
+                booklist.add(bookitem);
+
                 reader.close();
                 fr.close();
             } catch (Exception e) {
