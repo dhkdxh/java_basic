@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -11,18 +12,18 @@ public class Student implements Serializable {
     private static final long serialVersionUID = 1;
     private String name;
     private int total;
-    private float average;
+    private double average;
     private String grade;
-    private int[] record = new int[4];
+    private List<Integer> record;
 
     public Student(){
         name = "^^";
         total = 0;
-        average = 0;
+        average = 0.0;
         grade = "";
     }
 
     public String toString(){
-        return "이름:  "+name+"\n국어: "+ record[0]+"\n영어: "+record[1]+"\n수학: "+record[2]+"\n과학: "+record[3]+"\n";
+        return "점수: "+record+"\n총점: "+total+", 평균: "+average+", 학점: "+grade;
     }
 }
