@@ -11,7 +11,10 @@ public class SortedStudent {
 
 
     public static void main(String[] args) {
-
+        loadObjectFromFile();
+        createTreeSet();
+        printResult();
+        outputObject();
     }
 
     public static void loadObjectFromFile() {
@@ -44,10 +47,26 @@ public class SortedStudent {
                 }
             }
         });
+
+        for (Map.Entry<String, Student> entry : studentInfo.entrySet()) {
+            Student current = entry.getValue();
+            students.add(current);
+        }
     }
 
     public static void printResult(){
+        System.out.println("[정렬 및 저장: 평균 오름차순]");
+        System.out.println("불러온 학생 수: "+ studentInfo.size());
+        System.out.println("정렬규칙: 평균 ASC, 평균 동률이면 이름 사전순 ASC");
 
+        System.out.println("\n저장 대상(미리보기 상위 10명):");
+        int count = 0;
+        Iterator<Student> iter = students.iterator();
+        while(iter.hasNext()){
+            Student student = iter.next();
+            if(count==10) break;
+            System.out.printf("- %s (평균 %.1f)\n", student.getName(), student.getAverage());
+        }
     }
 
     public static void outputObject(){
@@ -62,11 +81,14 @@ public class SortedStudent {
         }
 
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+            oos.writeObject(students);
 
+            System.out.println("결과 파일: ./orderByAvg.dat");
+            System.out.println("[완료] 정렬된 결과를 파일로 저장했습니다.");
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("[오류] "+ e.getMessage());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("[오류] "+ e.getMessage());
         }
     }
 }
