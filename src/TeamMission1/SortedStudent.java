@@ -4,6 +4,18 @@ import java.nio.file.*;
 import java.util.*;
 import java.io.*;
 
+class StudentComparator implements Comparator<Student>, Serializable {
+    public int compare(Student s1, Student s2) {
+        if(s1.getAverage() > s2.getAverage()) return 1;
+        else if(s1.getAverage() < s2.getAverage()) return -1;
+        else{//평균이 같은 경우 이름 순..
+            if(s1.getName().compareTo(s2.getName()) > 0) return 1;
+            else if(s1.getName().compareTo(s2.getName()) < 0) return -1;
+            return 0;
+        }
+    }
+}
+
 public class SortedStudent {
     static Map<String, Student> studentInfo;
     static File file;
@@ -36,17 +48,7 @@ public class SortedStudent {
     }
 
     public static void createTreeSet(){
-        students = new TreeSet<>(new Comparator<Student>() {
-            public int compare(Student s1, Student s2) {
-                if(s1.getAverage() > s2.getAverage()) return 1;
-                else if(s1.getAverage() < s2.getAverage()) return -1;
-                else{//평균이 같은 경우 이름 순..
-                    if(s1.getName().compareTo(s2.getName()) > 0) return 1;
-                    else if(s1.getName().compareTo(s2.getName()) < 0) return -1;
-                    return 0;
-                }
-            }
-        });
+        students = new TreeSet<>(new StudentComparator());
 
         for (Map.Entry<String, Student> entry : studentInfo.entrySet()) {
             Student current = entry.getValue();
@@ -83,7 +85,7 @@ public class SortedStudent {
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
             oos.writeObject(students);
 
-            System.out.println("결과 파일: ./orderByAvg.dat");
+            System.out.println("\n결과 파일: ./orderByAvg.dat");
             System.out.println("[완료] 정렬된 결과를 파일로 저장했습니다.");
         } catch (FileNotFoundException e) {
             System.out.println("[오류] "+ e.getMessage());
