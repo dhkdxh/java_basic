@@ -58,15 +58,15 @@ TeamMission1/
 
 **1. 성적 입력 (StudentInput)**
 
-<img src="./images/img1.png" alt ="input" width="400/>
+<img src="./images/img1.png" alt ="input" width="1000"/>
 
 **2. 성적 출력 (StudentOutput)**
 
-<img src="./images/img2.png" alt ="output" width="400/>
+<img src="./images/img2.png" alt ="output" width="400"/>
 
 **3. 정렬 후 저장 (SortedStudent)**
 
-<img src="./images/img3.png" alt ="sorted" width="400/>
+<img src="./images/img3.png" alt ="sorted" width="400"/>
 
 ## 🚀 실행 흐름
 
