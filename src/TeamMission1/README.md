@@ -58,7 +58,7 @@ TeamMission1/
 
 **1. 성적 입력 (StudentInput)**
 
-<img src="./images/img1.png" alt ="input" width="1000"/>
+<img src="./images/img1.png" alt ="input" width="700"/>
 
 **2. 성적 출력 (StudentOutput)**
 
